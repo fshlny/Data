@@ -1,6 +1,7 @@
 package com.fsh.data;
 
-import com.fsh.data.queue.LinkedQueue;
+import com.fsh.data.queue.LinkedList;
+
 
 /**
  * Hello world!
@@ -8,12 +9,21 @@ import com.fsh.data.queue.LinkedQueue;
  */
 public class App {
 	public static void main(String[] args) {
-		LinkedQueue<String> queue = new LinkedQueue<String>(20);
-		for(int i=0;i<10;i++){
-			queue.add(Thread.currentThread().getName()+i);
-		}
-		String remove = queue.remove();
-		System.out.println(remove);
-		
+        LinkedList<Integer> t = new LinkedList<Integer>();
+        for(int i=0;i<100;i++){
+            t.addFirst(i);
+        }
+        int first1 = t.removeFirst();
+        int first2 = t.removeFirst();
+        int last1 = t.removeLast();
+        int last2 = t.removeLast();
+        System.out.println(first1);
+        System.out.println(first2);
+        System.out.println(last1);
+        System.out.println(last2);
+        Object[] it = t.toArray();
+        for(int i=0;i<it.length;i++){
+            System.out.printf(" ||| "+i + " ---> "+it[i]);
+        }
 	}
 }
