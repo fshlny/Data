@@ -1,7 +1,18 @@
 package com.fsh.data.tree;
 
 import java.util.HashMap;
-
+/**
+ * 二叉树的简单实现
+ * 二叉树结构
+ * 
+ * 
+ *                  G
+ *                /   \
+ *               C     V
+ *              / \   / \
+ *             A   B H   I
+ *      
+ */
 public class BinaryTree<T extends Comparable<? super T>> {
 	private TreeNode<T> root;
 
@@ -62,6 +73,44 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		case -1:
 		}
 	}
+	/**
+	 * 获取树的高度
+	 * @return
+	 */
+	public int getTreeHeight(){
+		return getHeight(root);
+	}
+	
+	public void DOrder(TreeNode node){
+		if(node != null){
+			System.err.println("node.v="+node.v);
+			DOrder(node.l);
+			DOrder(node.r);
+		}
+	}
+	
+	public void LOrder(TreeNode node){
+		if(node != null){
+			DOrder(node.l);
+			System.err.println("node.v="+node.v);
+			DOrder(node.r);
+		}
+	}
+	
+	public void ROrder(TreeNode node){
+		if(node != null){
+			DOrder(node.l);
+			DOrder(node.r);
+			System.err.println("node.v="+node.v);
+		}
+	}
+	
+	private int getHeight(TreeNode node){
+		if(node == null) return 0;
+		int leftHeight = getHeight(node.l);
+		int rightHeight = getHeight(node.r);
+		return leftHeight<rightHeight?(rightHeight+1):(leftHeight+1);
+	}
 	
 	public static class TreeNode<T extends Comparable<? super T>>{
 		public T v;
@@ -82,6 +131,13 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		tree.put(5);
 		tree.put(4);
 		
-		System.err.println("");
+		System.err.println("TreeHeight = "+tree.getTreeHeight());
+		
+		System.err.println("================前序=================");
+		tree.DOrder(tree.root);
+		System.err.println("=================中序================");
+		tree.LOrder(tree.root);
+		System.err.println("==================后续===============");
+		tree.ROrder(tree.root);
 	}
 }
