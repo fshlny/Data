@@ -1,7 +1,5 @@
 package com.fsh.data.tree;
 
-import java.util.HashMap;
-
 /**
  * 二叉树的简单实现
  * 二叉树结构
@@ -25,7 +23,7 @@ import java.util.HashMap;
 public class BinaryTree<T extends Comparable<? super T>> {
 	private TreeNode<T> root;
 	
-	public BinaryTree(TreeNode root){
+	public BinaryTree(TreeNode<T> root){
 		this.root = root;
 	}
 	
@@ -49,7 +47,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 	 * @param value
 	 * @param compare
 	 */
-	private void putValue(TreeNode value,TreeNode compare){
+	private void putValue(TreeNode<T> value,TreeNode<T> compare){
 		int result = compare.v.compareTo(value.v);
 		if(result == 0){
 			compare.v = value.v;
@@ -89,7 +87,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		return getHeight(root);
 	}
 	
-	public void DLROrder(TreeNode node){
+	public void DLROrder(TreeNode<T> node){
 		if(node != null){
 			System.err.println("node.v="+node.v);
 			DLROrder(node.l);
@@ -97,7 +95,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		}
 	}
 	
-	public void LDROrder(TreeNode node){
+	public void LDROrder(TreeNode<T> node){
 		if(node != null){
 			LDROrder(node.l);
 			System.err.println("node.v="+node.v);
@@ -105,7 +103,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		}
 	}
 	
-	public void LRDOrder(TreeNode node){
+	public void LRDOrder(TreeNode<T> node){
 		if(node != null){
 			LRDOrder(node.l);
 			LRDOrder(node.r);
@@ -113,7 +111,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		}
 	}
 	
-	private int getHeight(TreeNode node){
+	private int getHeight(TreeNode<T> node){
 		if(node == null) return 0;
 		int leftHeight = getHeight(node.l);
 		int rightHeight = getHeight(node.r);
