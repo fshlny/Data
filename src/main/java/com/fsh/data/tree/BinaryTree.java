@@ -1,6 +1,7 @@
 package com.fsh.data.tree;
 
 import java.util.HashMap;
+
 /**
  * 二叉树的简单实现
  * 二叉树结构
@@ -11,11 +12,18 @@ import java.util.HashMap;
  *               C     V
  *              / \   / \
  *             A   B H   I
+ * 
+ * 二叉树的访问方法，根据访问root节点的顺序分为以下三种（D:root；L:左子树；R：右子树）：
+ * 
+ * 1.DLR,先访问root，在访问左子树，最后访问右子树   {@link #DLROrder(TreeNode) }
+ * 2.LDR,先访问左子树，再访问root，最后访问右子树   {@link #LDROrder(TreeNode) }
+ * 3.LRD,先访问左子树，再访问右子树，最后访问root {@link #LRDOrder(TreeNode) }
+ * 
+ *      
  *      
  */
 public class BinaryTree<T extends Comparable<? super T>> {
 	private TreeNode<T> root;
-
 	
 	public BinaryTree(TreeNode root){
 		this.root = root;
@@ -81,26 +89,26 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		return getHeight(root);
 	}
 	
-	public void DOrder(TreeNode node){
+	public void DLROrder(TreeNode node){
 		if(node != null){
 			System.err.println("node.v="+node.v);
-			DOrder(node.l);
-			DOrder(node.r);
+			DLROrder(node.l);
+			DLROrder(node.r);
 		}
 	}
 	
-	public void LOrder(TreeNode node){
+	public void LDROrder(TreeNode node){
 		if(node != null){
-			DOrder(node.l);
+			LDROrder(node.l);
 			System.err.println("node.v="+node.v);
-			DOrder(node.r);
+			LDROrder(node.r);
 		}
 	}
 	
-	public void ROrder(TreeNode node){
+	public void LRDOrder(TreeNode node){
 		if(node != null){
-			DOrder(node.l);
-			DOrder(node.r);
+			LRDOrder(node.l);
+			LRDOrder(node.r);
 			System.err.println("node.v="+node.v);
 		}
 	}
@@ -112,32 +120,4 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		return leftHeight<rightHeight?(rightHeight+1):(leftHeight+1);
 	}
 	
-	public static class TreeNode<T extends Comparable<? super T>>{
-		public T v;
-		public TreeNode<T> l;
-		public TreeNode<T> r;
-		public TreeNode(T v){
-			this.v = v;
-		}
-	}
-	
-	public static void main(String[] args) {
-		BinaryTree<Integer> tree = new BinaryTree<Integer>();
-		tree.put(3);
-		tree.put(2);
-		tree.put(1);
-		tree.put(7);
-		tree.put(6);
-		tree.put(5);
-		tree.put(4);
-		
-		System.err.println("TreeHeight = "+tree.getTreeHeight());
-		
-		System.err.println("================前序=================");
-		tree.DOrder(tree.root);
-		System.err.println("=================中序================");
-		tree.LOrder(tree.root);
-		System.err.println("==================后续===============");
-		tree.ROrder(tree.root);
-	}
 }
