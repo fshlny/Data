@@ -1,5 +1,6 @@
 package com.fsh.data.tree;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -24,7 +25,6 @@ import java.util.Stack;
  */
 public class BinaryTree<T extends Comparable<? super T>> {
 	private TreeNode<T> root;
-	
 	public BinaryTree(TreeNode<T> root){
 		this.root = root;
 	}
@@ -44,6 +44,46 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		}
 		putValue(node,root);
 	}
+
+	public boolean remove(T t){
+	    if(t == null) return false;
+	    TreeNode<T> deleteNode = root;
+	    boolean isLeft = false;
+	    while(deleteNode != null){
+            int compairResult = t.compareTo(deleteNode.v);
+            if(compairResult < 0){
+                deleteNode = deleteNode.l;
+                isLeft = true;
+            }else if(compairResult > 0){
+                deleteNode = deleteNode.r;
+                isLeft = false;
+            }else{
+                break;
+            }
+        }
+        if(deleteNode == null){
+	        return false;
+        }
+        if(deleteNode.r == null && deleteNode.l == null){
+	        if(isLeft){
+	            deleteNode.p.l = null;
+            }else
+	            deleteNode.p.r = null;
+	        deleteNode = null;
+	        return true;
+        }else if(deleteNode.l != null){//左子树不为空
+	        deleteNode.v = deleteNode.l.v;
+	        deleteNode.l = null;
+	        return true;
+        }else if(deleteNode.r != null){
+	        deleteNode.v = deleteNode.r.v;
+	        deleteNode.r = null;
+	        return true;
+        }
+        return false;
+    }
+
+
 	/**
 	 * 保存
 	 * @param value
@@ -52,23 +92,24 @@ public class BinaryTree<T extends Comparable<? super T>> {
 	private void putValue(TreeNode<T> value,TreeNode<T> compare){
 		int result = compare.v.compareTo(value.v);
 		if(result == 0){
-			compare.v = value.v;
 			return;
 		}else if(result > 0){
 			if(compare.l == null){
 				compare.l = value;
+                value.p = compare;
 			}else{
 				putValue(value, compare.l);
 			}
 		}else if(result < 0){
 			if(compare.r == null){
 				compare.r = value;
+                value.p = compare;
 			}else{
 				putValue(value, compare.r);
 			}
 		}
 		
-		switch(result){
+		/*switch(result){
 		case 0: compare.v = value.v; break;
 		case 1: 
 			if(compare.l == null){
@@ -79,7 +120,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 			}
 			break;
 		case -1:
-		}
+		}*/
 	}
 	/**
 	 * 获取树的高度
@@ -122,7 +163,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
 	/**
 	 * 深度优先搜索算法
 	 */
-	public void depthFirstSearch(TreeNode<T> root){
+	public void depthFirstSearch(){
 		if(root == null) return;
 		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
 		stack.push(root);
@@ -139,5 +180,22 @@ public class BinaryTree<T extends Comparable<? super T>> {
 			System.err.println();
 		}
 	}
+
+	public void breathFirstSearch(){
+		if(root == null) return;
+        LinkedList<TreeNode<T>> queue = new LinkedList<TreeNode<T>>();
+        queue.offer(root);
+        while (!queue.isEmpty()){
+            TreeNode<T> node = queue.poll();
+            System.err.println("node.v  ---->  "+node.v);
+            if(node.l != null){
+                queue.offer(node.l);
+            }
+            if(node.r != null){
+                queue.offer(node.r);
+            }
+        }
+	}
+
 	
 }
