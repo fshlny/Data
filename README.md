@@ -4,4 +4,4 @@
 
 > [基于链表实现的简易版LinkedList](./note/LinkedList.md)
 >
-> [二叉树](node/BinaryTree.md)
+> [二叉树](./node/BinaryTree.md)
