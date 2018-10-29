@@ -5,6 +5,8 @@ import com.fsh.data.tree.BinaryTree;
 import org.junit.Test;
 
 
+import java.util.HashMap;
+
 import static org.junit.Assert.assertEquals;
 
 public class BinaryTreeTest {

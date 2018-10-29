@@ -23,7 +23,7 @@ import java.util.Stack;
  *      
  *      
  */
-public class BinaryTree<T extends Comparable<? super T>> {
+public class BinaryTree<T extends Comparable<? super T>> implements Tree<T> {
 	private TreeNode<T> root;
 	public BinaryTree(TreeNode<T> root){
 		this.root = root;
@@ -43,6 +43,32 @@ public class BinaryTree<T extends Comparable<? super T>> {
 			return;
 		}
 		putValue(node,root);
+	}
+
+	/**
+	 * 保存
+	 * @param value
+	 * @param compare
+	 */
+	private void putValue(TreeNode<T> value,TreeNode<T> compare){
+		int result = compare.v.compareTo(value.v);
+		if(result == 0){
+			return;
+		}else if(result > 0){
+			if(compare.l == null){
+				compare.l = value;
+				value.p = compare;
+			}else{
+				putValue(value, compare.l);
+			}
+		}else if(result < 0){
+			if(compare.r == null){
+				compare.r = value;
+				value.p = compare;
+			}else{
+				putValue(value, compare.r);
+			}
+		}
 	}
 
 	public boolean remove(T t){
@@ -84,44 +110,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
     }
 
 
-	/**
-	 * 保存
-	 * @param value
-	 * @param compare
-	 */
-	private void putValue(TreeNode<T> value,TreeNode<T> compare){
-		int result = compare.v.compareTo(value.v);
-		if(result == 0){
-			return;
-		}else if(result > 0){
-			if(compare.l == null){
-				compare.l = value;
-                value.p = compare;
-			}else{
-				putValue(value, compare.l);
-			}
-		}else if(result < 0){
-			if(compare.r == null){
-				compare.r = value;
-                value.p = compare;
-			}else{
-				putValue(value, compare.r);
-			}
-		}
-		
-		/*switch(result){
-		case 0: compare.v = value.v; break;
-		case 1: 
-			if(compare.l == null){
-				compare.l = value;
-				break;
-			}else{
-				putValue(value, compare.l);
-			}
-			break;
-		case -1:
-		}*/
-	}
+
 	/**
 	 * 获取树的高度
 	 * @return
@@ -181,6 +170,9 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		}
 	}
 
+	/**
+	 * 广度优先
+	 */
 	public void breathFirstSearch(){
 		if(root == null) return;
         LinkedList<TreeNode<T>> queue = new LinkedList<TreeNode<T>>();

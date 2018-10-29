@@ -1,14 +1,14 @@
 package com.fsh.data.tree;
 
-public interface Tree {
+public interface Tree<T extends Comparable<? super T>> {
 	/**
 	 * 添加
-	 * @param node
+	 * @param t
 	 */
-	void put(TreeNode node);
+	void put(T t);
 	/**
 	 * 删除
-	 * @param node
+	 * @param t
 	 */
-	void remove(TreeNode node);
+	boolean remove(T t);
 }
