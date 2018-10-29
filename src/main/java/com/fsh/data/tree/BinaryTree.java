@@ -1,5 +1,7 @@
 package com.fsh.data.tree;
 
+import java.util.Stack;
+
 /**
  * 二叉树的简单实现
  * 二叉树结构
@@ -116,6 +118,26 @@ public class BinaryTree<T extends Comparable<? super T>> {
 		int leftHeight = getHeight(node.l);
 		int rightHeight = getHeight(node.r);
 		return leftHeight<rightHeight?(rightHeight+1):(leftHeight+1);
+	}
+	/**
+	 * 深度优先搜索算法
+	 */
+	public void depthFirstSearch(TreeNode<T> root){
+		if(root == null) return;
+		Stack<TreeNode<T>> stack = new Stack<TreeNode<T>>();
+		stack.push(root);
+		while(!stack.isEmpty()){
+			TreeNode<T> node = stack.pop();
+			System.err.print(node.v +"  ");
+			if(node.r != null){
+				stack.push(node.r);
+			}
+			if(node.l != null){
+				stack.push(node.l);
+			}
+
+			System.err.println();
+		}
 	}
 	
 }
